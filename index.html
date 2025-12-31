@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Resume Builder</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f2f2f2;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        text-align: center;
+        background: #007bff;
+        color: white;
+        padding: 15px;
+        margin: 0;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 20px;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .form-box, .preview-box {
+        background: white;
+        padding: 20px;
+        width: 350px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 8px;
+        margin: 6px 0;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        background: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .resume {
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Digital Resume Builder</h1>
+
+<div class="container">
+    <!-- Input Form -->
+    <div class="form-box">
+        <h3>Enter Details</h3>
+        <input type="text" id="name" placeholder="Full Name" required>
+        <input type="email" id="email" placeholder="Email">
+        <input type="text" id="phone" placeholder="Phone Number">
+        <textarea id="education" placeholder="Education"></textarea>
+        <textarea id="experience" placeholder="Experience"></textarea>
+        <textarea id="skills" placeholder="Skills"></textarea>
+
+        <button onclick="generateResume()">Generate Resume</button>
+        <button onclick="downloadPDF()">Download PDF</button>
+    </div>
+
+    <!-- Resume Preview -->
+    <div class="preview-box">
+        <h3>Resume Preview</h3>
+        <div class="resume" id="resumePreview">
+            <p><b>Name:</b></p>
+            <p><b>Email:</b></p>
+            <p><b>Phone:</b></p>
+            <p><b>Education:</b></p>
+            <p><b>Experience:</b></p>
+            <p><b>Skills:</b></p>
+        </div>
+    </div>
+</div>
+
+<!-- jsPDF CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+function generateResume() {
+    document.getElementById("resumePreview").innerHTML =
+        "<p><b>Name:</b> " + name.value + "</p>" +
+        "<p><b>Email:</b> " + email.value + "</p>" +
+        "<p><b>Phone:</b> " + phone.value + "</p>" +
+        "<p><b>Education:</b> " + education.value + "</p>" +
+        "<p><b>Experience:</b> " + experience.value + "</p>" +
+        "<p><b>Skills:</b> " + skills.value + "</p>";
+}
+
+function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF();
+
+    pdf.text("Digital Resume", 20, 20);
+    pdf.text("Name: " + name.value, 20, 30);
+    pdf.text("Email: " + email.value, 20, 40);
+    pdf.text("Phone: " + phone.value, 20, 50);
+    pdf.text("Education: " + education.value, 20, 60);
+    pdf.text("Experience: " + experience.value, 20, 70);
+    pdf.text("Skills: " + skills.value, 20, 80);
+
+    pdf.save("Resume.pdf");
+}
+</script>
+
+</body>
+</html>
